@@ -1,4 +1,4 @@
-from main import *
+from Characters import Player
 class Enemy(Player):
     def __init__(self,name, hp, attack,mana,ability):
         super().__init__(name,hp,attack,mana,ability)
