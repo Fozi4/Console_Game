@@ -38,11 +38,11 @@ class Archer(Player):
     def use_ability(self, target):
         if self.mana >= 10:
             dmg = self.attack * 2
-            print(f"{self.name} uses Double Attack for {dmg} damage!")
             target.take_damage(dmg)
             self.mana -= 10
+            return str(f"{self.name} uses Double Attack for {dmg} damage!")
         else:
-            print(f"{self.name} has not enough mana!")
+            return str(f"{self.name} has not enough mana!")
 
 class Mage(Player):
     def __init__(self,name,hp,attack,mana,fireball):
@@ -50,11 +50,11 @@ class Mage(Player):
     def use_ability(self, target):
         if self.mana >= 20:
             dmg = self.attack + 20
-            print(f"{self.name} uses Fireball for {dmg} damage!")
             target.take_damage(dmg)
             self.mana -= 20
+            return str(f"{self.name} uses Fireball for {dmg} damage!")
         else:
-            print(f"{self.name} has not enough mana!")
+            return str(f"{self.name} has not enough mana")
     
 
 
