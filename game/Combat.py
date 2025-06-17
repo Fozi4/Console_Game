@@ -1,22 +1,8 @@
-from random import randint
-from Characters import Player,Warrior,Archer,Mage
-from Enemies import Enemy
 import os
-
-#--------------------Characters-------------------------------#
-warrior = Warrior("Warrior",100,10,50,"Block")
-archer = Archer("Archer",80,15,10,"Double Attack")
-mage = Mage("Mage",60,20,70,"Fireball")
-#-------------------Enemies--------------------------------#
-enemy = Enemy("Ork",50,5,10,"bite")
-enemy1 = Enemy("Ork",50,5,10,"bite")
-enemies = [enemy,enemy1]
-#-------------------------------------------------------------#
-_choose = True
+from Characters import Player
+from Enemies import Enemy
 messages = []
 messages.append("-----ACTIONS------")
-# _characters=[]
-# _characters.append(warrior,archer,mage)
 
 def show_messeges(messeges):
         for i in messages:
@@ -47,10 +33,12 @@ def combat(player, enemies):
             print(f"{enemy.name} HP: {enemy.hp}")
 
         action = input("Choose action: (1) Attack (2) Ability: ")
-        print("Choose which enemy to attack:")
+        print("Choose which enemy to attack")
+        
         for idx, enemy in enumerate(enemies):
-            print(f"[{idx}] {enemy.name} - HP: {enemy.hp}")  
-        choose = int(input("Enter enemy number"))      
+            print(f"[{idx}] {enemy.name} - HP: {enemy.hp}") 
+             
+        choose = int(input("Enter enemy number: "))      
         target = targets(enemies, choose)
         if target is None or not target.is_alive():
             print("Invalid or dead target.")
@@ -67,11 +55,13 @@ def combat(player, enemies):
             for enemy in enemies:
                 print(f"{enemy.name} is defeated!")
             break
-        
-        
+              
         for enemy in enemies:
             if enemy.is_alive():
-                messages.append(enemy.normal_attack(player))
+                if turn % 2 == 0:
+                    messages.append(enemy.enemy_ability(player))
+                else:
+                    messages.append(enemy.enemy_attack(player))
         
         if not player.is_alive():
             print(f"{player.name} is defeated!")
@@ -79,24 +69,3 @@ def combat(player, enemies):
         
         turn += 1
         os.system("cls" if os.name == "nt" else "clear")
-
-
-while _choose:
-    INPUT = int(input("CHOOSE YOUR CHAMPION:\n1 - Warrior\n2 - Archer\n3 - Mage\n"))
-    if INPUT == 1:
-        os.system("cls" if os.name == "nt" else "clear")
-        combat(warrior, enemies)
-        _choose = False
-        break
-    if INPUT == 2:
-        os.system("cls" if os.name == "nt" else "clear")
-        combat(archer, enemies)
-        _choose = False
-        break
-    if INPUT == 3:
-        os.system("cls" if os.name == "nt" else "clear")
-        combat(mage, enemies)
-        _choose = False
-        break
-    else:
-        print("Enter a correct number")
