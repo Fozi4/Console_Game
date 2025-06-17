@@ -2,6 +2,7 @@ from random import randint
 from Characters import Player,Warrior,Archer,Mage
 from Enemies import Enemy
 import os
+import menu
 
 #--------------------Characters-------------------------------#
 warrior = Warrior("Warrior",100,10,50,"Block")
@@ -12,7 +13,7 @@ enemy = Enemy("Ork",50,5,10,"bite")
 enemy1 = Enemy("Ork",50,5,10,"bite")
 enemies = [enemy,enemy1]
 #-------------------------------------------------------------#
-_choose = True
+
 messages = []
 messages.append("-----ACTIONS------")
 # _characters=[]
@@ -22,13 +23,18 @@ def show_messeges(messeges):
         for i in messages:
             print(" "*50+i)
 
-def targets(target):
-    if target == "enemy":
-        return enemies[0]
-    elif target == "enemy1":
-        return enemies[1]
-    else:
+def targets(enemies, index_str):
+    try:
+        index = int(index_str)
+        if 0 <= index < len(enemies):
+            return enemies[index]
+        else:
+            return None
+    except ValueError:
         return None
+  
+        
+
 
 def enemies_alive(enemies):
     return any(enemy.is_alive() for enemy in enemies)
@@ -45,8 +51,10 @@ def combat(player, enemies):
             print(f"{enemy.name} HP: {enemy.hp}")
 
         action = input("Choose action: (1) Attack (2) Ability: ")
-        choose = input("Choose witch enemy to attack: (enemy/enemy1): ").lower()
-        target = targets(choose)
+        for idx, enemy in enumerate(enemies):
+                print(f"[{idx}] {enemy.name} - HP: {enemy.hp}")
+        choose = int(input("Enter enemy number"))
+        target = targets(enemies, choose)
         if target is None:
             print("Invalid target input")
             continue
@@ -76,23 +84,29 @@ def combat(player, enemies):
         turn += 1
         os.system("cls" if os.name == "nt" else "clear")
 
-
-while _choose:
-    INPUT = int(input("CHOOSE YOUR CHAMPION:\n1 - Warrior\n2 - Archer\n3 - Mage\n"))
-    if INPUT == 1:
-        os.system("cls" if os.name == "nt" else "clear")
-        combat(warrior, enemies)
-        _choose = False
-        break
-    if INPUT == 2:
-        os.system("cls" if os.name == "nt" else "clear")
-        combat(archer, enemies)
-        _choose = False
-        break
-    if INPUT == 3:
-        os.system("cls" if os.name == "nt" else "clear")
-        combat(mage, enemies)
-        _choose = False
-        break
-    else:
-        print("Enter a correct number")
+def character_chooseing():
+    _choose = True
+    while _choose:
+        INPUT = int(input("CHOOSE YOUR CHAMPION:\n1 - Warrior\n2 - Archer\n3 - Mage\n4 - MAIN MENU\n-----> "))
+        if INPUT == 1:
+            menu.clear_screen()
+            return combat(warrior, enemies)
+            _choose = False
+            break
+        if INPUT == 2:
+            menu.clear_screen()
+            return combat(archer, enemies)
+            _choose = False
+            break                                 #Was created a function clear_screen() 
+        if INPUT == 3:
+            menu.clear_screen()
+            return combat(mage, enemies)
+            _choose = False
+            break
+        if INPUT == 4:
+            menu.clear_screen()
+            return menu.main_menu()
+            _choose = False
+            break
+        else:
+            print("Enter a correct number")
