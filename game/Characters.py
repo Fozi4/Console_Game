@@ -16,7 +16,6 @@ class Player:
         
     
     def normal_attack(self, target):
-        
         target.take_damage(self.attack)
         return str(f"{self.name} attacks {target.name} for {self.attack} damage!")
     
@@ -56,21 +55,3 @@ class Mage(Player):
         else:
             return str(f"{self.name} has not enough mana")
     
-
-
-
-warrior = Warrior("Warrior",100,10,50,"Block")
-
-archer = Archer("Archer", 90,20,70,"Double Attack")
-
-mage = Mage("Mage", 60,40,100,"Fireball")
-
-stats = [warrior.stats(),archer.stats(),mage.stats()]
-for i in stats:
-    print(f"{i} \n")
-
-# choose = int(input("Choose your character from 0 to 2:"))
-# characters = [warrior, archer, mage]
-# character=characters[choose]
-# print(character)
-
