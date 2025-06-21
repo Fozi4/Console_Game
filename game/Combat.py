@@ -3,7 +3,10 @@ from Characters import Player,Warrior,Archer,Mage
 from Enemies import Enemy
 import os
 import menu
+from menu import *
+from menu import Level_expirience
 
+expirience = Level_expirience(0)
 #--------------------Characters-------------------------------#
 warrior = Warrior("Warrior",100,10,50,"Block")
 archer = Archer("Archer",80,15,10,"Double Attack")
@@ -13,11 +16,8 @@ enemy = Enemy("Ork",50,5,10,"bite")
 enemy1 = Enemy("Ork",50,5,10,"bite")
 enemies = [enemy,enemy1]
 #-------------------------------------------------------------#
-
 messages = []
 messages.append("-----ACTIONS------")
-# _characters=[]
-# _characters.append(warrior,archer,mage)
 
 def show_messeges(messeges):
         for i in messages:
@@ -34,7 +34,13 @@ def targets(enemies, index_str):
         return None
   
         
-
+def _is_combat_finished_():
+     for enemy in enemies:
+            if len(enemies)<=0:
+                expirience.exp_increase(40)
+                print("+40 exp")
+                input("press enter...")
+                main_menu()
 
 def enemies_alive(enemies):
     return any(enemy.is_alive() for enemy in enemies)
@@ -42,6 +48,7 @@ def enemies_alive(enemies):
 def combat(player, enemies):
     turn = 1
     while player.is_alive() and enemies_alive(enemies):
+       
         print(f"\n------------ Turn {turn} ---------") 
         show_messeges(messages)
 
@@ -69,6 +76,7 @@ def combat(player, enemies):
         if not enemies_alive(enemies):
             for enemy in enemies:
                 print(f"{enemy.name} is defeated!")
+                
             break
         
         
@@ -76,6 +84,8 @@ def combat(player, enemies):
             if not enemy.is_alive():
                 enemies.remove(enemy)  
                 
+        
+
             messages.append(enemy.normal_attack(player))
         if not player.is_alive():
             print(f"{player.name} is defeated!")
