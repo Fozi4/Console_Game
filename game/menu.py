@@ -1,8 +1,6 @@
-from Combat import *
 from Characters import *
 import os
-import Combat
-
+import lvls 
 archer = Archer("Archer",80,15,10,"Double Attack")
 mage = Mage("Mage",60,20,70,"Fireball")
 warrior = Warrior("Warrior",100,10,50,"Block")
@@ -41,7 +39,7 @@ def main_menu():
         choice = input("------> ")
         
         if choice == "1":
-            Combat.character_chooseing()
+            lvls.play()
             _choose = False
         elif choice == "2":
             print(stats(warrior,archer,mage))

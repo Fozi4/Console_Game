@@ -14,7 +14,6 @@ class Player:
     def take_damage(self, dmg):
         self.hp -= dmg
         
-    
     def normal_attack(self, target):
         target.take_damage(self.attack)
         return str(f"{self.name} attacks {target.name} for {self.attack} damage!")
